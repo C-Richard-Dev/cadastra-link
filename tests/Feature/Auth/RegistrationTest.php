@@ -1,7 +1,6 @@
 <?php
 
 use App\Mail\WelcomeEmail;
-use Illuminate\Http\Client\Request;
 use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Facades\Mail;
 use Laravel\Fortify\Features;
@@ -16,15 +15,12 @@ test('registration screen can be rendered', function () {
     $response->assertOk();
 });
 
-test('new users can register', function () {
+test('new users can register with an eight-character lowercase password', function () {
     Mail::fake();
     $this->app->detectEnvironment(fn (): string => 'production');
     Http::preventStrayRequests();
-    Http::fake([
-        'https://api.pwnedpasswords.com/range/*' => Http::response(''),
-    ]);
 
-    $password = 'R123456789RXSA';
+    $password = 'abcdefgh';
 
     $response = $this->post(route('register.store'), [
         'name' => 'Test User',
@@ -37,10 +33,6 @@ test('new users can register', function () {
     $this->assertDatabaseHas('users', ['email' => 'test@example.com']);
     $response->assertRedirect(route('workspaces.index', absolute: false));
     Mail::assertSent(WelcomeEmail::class, fn (WelcomeEmail $mail): bool => $mail->hasTo('test@example.com'));
-    Http::assertSent(fn (Request $request): bool => str_starts_with(
-        $request->url(),
-        'https://api.pwnedpasswords.com/range/',
-    ));
 });
 
 test('invalid registrations do not send a welcome email', function () {
