@@ -355,7 +355,7 @@ async function confirmDeleteLink() {
 
 <template>
     <section
-        class="flex h-[530px] flex-col rounded-2xl border border-primary/15 bg-background p-4 shadow-sm sm:p-5"
+        class="flex min-h-[420px] flex-1 flex-col rounded-2xl border border-primary/15 bg-background p-4 shadow-sm sm:p-5"
     >
         <div
             class="mb-4 flex items-center justify-between gap-3 border-b border-border pb-4"
@@ -363,7 +363,7 @@ async function confirmDeleteLink() {
             <span
                 class="text-[11px] font-semibold tracking-[0.2em] text-primary uppercase"
             >
-                Visualização
+                Links
             </span>
 
             <button

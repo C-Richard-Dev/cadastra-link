@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { computed, ref } from 'vue';
 import { Head, Link, router, usePage } from '@inertiajs/vue3';
-import { ArrowLeft, FolderGit2, LogOut } from '@lucide/vue';
+import { ArrowLeft, LogOut } from '@lucide/vue';
 import { index, leave } from '@/routes/workspaces';
 import WorkspaceCategorySelector from '@/components/WorkspaceCategorySelector.vue';
 import WorkspaceLinksPanel from '@/components/WorkspaceLinksPanel.vue';
@@ -183,18 +183,26 @@ function handleCategorySelected(categoryId: number) {
     <Head :title="workspace.name" />
 
     <div
-        class="mx-auto flex min-h-[calc(100vh-72px)] w-full max-w-7xl flex-col px-4 py-6 sm:px-6 lg:px-8 lg:py-8"
+        class="flex min-h-[calc(100vh-72px)] w-full min-w-0 flex-col px-4 py-4 sm:px-6 sm:py-5 lg:px-8"
     >
         <div
-            class="mb-6 flex flex-col-reverse gap-3 sm:flex-row sm:items-center sm:justify-between"
+            class="mb-3 flex flex-col gap-3 sm:flex-row sm:items-center sm:justify-between"
         >
-            <Link
-                :href="index.url()"
-                class="inline-flex items-center gap-2 self-start rounded-md border border-border bg-background px-4 py-2 text-sm leading-normal font-medium text-foreground transition hover:border-primary/30 hover:bg-primary/10"
-            >
-                <ArrowLeft class="size-4" />
-                Voltar
-            </Link>
+            <div class="flex min-w-0 items-center gap-3">
+                <Link
+                    :href="index.url()"
+                    class="inline-flex shrink-0 items-center gap-2 rounded-md border border-border bg-background px-4 py-2 text-sm leading-normal font-medium text-foreground transition hover:border-primary/30 hover:bg-primary/10"
+                >
+                    <ArrowLeft class="size-4" />
+                </Link>
+
+                <h1
+                    class="min-w-0 truncate text-lg font-semibold tracking-tight text-foreground sm:text-xl"
+                    :title="workspace.name"
+                >
+                    {{ workspace.name }}
+                </h1>
+            </div>
 
             <div class="flex flex-wrap items-center gap-2 sm:justify-end">
                 <Button
@@ -216,70 +224,7 @@ function handleCategorySelected(categoryId: number) {
             </div>
         </div>
 
-        <section
-            class="relative isolate mb-6 overflow-hidden rounded-2xl border border-primary/20 bg-gradient-to-br from-primary/20 via-background to-primary/5 p-5 shadow-sm sm:p-8"
-        >
-            <div
-                aria-hidden="true"
-                class="absolute -top-20 -right-12 size-56 rounded-full bg-primary/20 blur-3xl"
-            />
-
-            <div
-                class="relative flex flex-col gap-6 sm:flex-row sm:items-center sm:justify-between"
-            >
-                <div class="flex items-start gap-4">
-                    <div
-                        class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary text-primary-foreground shadow-sm"
-                    >
-                        <FolderGit2 class="size-7" />
-                    </div>
-
-                    <div class="min-w-0">
-                        <span
-                            class="inline-flex items-center rounded-full border border-primary/25 bg-background/70 px-3 py-1 text-xs font-semibold tracking-wide text-primary"
-                        >
-                            Espaço de trabalho
-                        </span>
-                        <h1
-                            class="mt-3 text-2xl font-semibold tracking-tight break-words text-foreground sm:text-3xl"
-                        >
-                            {{ workspace.name }}
-                        </h1>
-                        <p
-                            class="mt-2 max-w-2xl text-sm leading-relaxed text-muted-foreground"
-                        >
-                            Organize e encontre rapidamente os links importantes
-                            deste workspace.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="flex flex-wrap gap-2 sm:justify-end">
-                    <div
-                        class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/75 px-4 py-2 text-sm text-foreground shadow-xs"
-                    >
-                        <span class="font-semibold">{{ linksPage.total }}</span>
-                        {{
-                            linksPage.total === 1
-                                ? 'link salvo'
-                                : 'links salvos'
-                        }}
-                    </div>
-                    <div
-                        class="inline-flex items-center gap-2 rounded-full border border-primary/20 bg-background/75 px-4 py-2 text-sm text-foreground shadow-xs"
-                    >
-                        <span class="font-semibold">{{
-                            categories.length
-                        }}</span>
-                        {{
-                            categories.length === 1 ? 'categoria' : 'categorias'
-                        }}
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <div>
+        <div class="flex min-h-0 flex-1 flex-col">
             <WorkspaceCategorySelector
                 :categories="categoryOptions"
                 :selected-category-id="selectedCategoryId"

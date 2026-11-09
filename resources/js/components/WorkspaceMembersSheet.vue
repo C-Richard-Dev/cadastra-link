@@ -108,7 +108,6 @@ async function loadMembers(open: boolean) {
                     class="inline-flex items-center gap-2 rounded-md border border-primary/25 bg-primary px-4 py-2 text-sm leading-normal font-semibold text-primary-foreground shadow-xs transition hover:bg-primary/90 focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 focus-visible:outline-none"
                 >
                     <Users class="size-4" />
-                    Ver Membros
                 </button>
             </SheetTrigger>
 

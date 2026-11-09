@@ -219,7 +219,7 @@ function handleCategoryCreated(category: {
 </script>
 
 <template>
-    <div class="mb-5 flex flex-col gap-2 sm:flex-row sm:items-center">
+    <div class="mb-3 flex flex-col gap-2 sm:flex-row sm:items-center">
         <div class="relative flex-1">
             <button
                 type="button"
