@@ -11,6 +11,7 @@ use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\Validator;
 use Illuminate\Support\Str;
 use Laravel\Fortify\Contracts\CreatesNewUsers;
+use Symfony\Component\Mailer\Exception\TransportExceptionInterface;
 
 class CreateNewUser implements CreatesNewUsers
 {
@@ -36,7 +37,11 @@ class CreateNewUser implements CreatesNewUsers
             'password' => bcrypt($input['password'] ?? 'password'),
         ]);
 
-        Mail::to($user)->send(new WelcomeEmail($user));
+        try {
+            Mail::to($user)->send(new WelcomeEmail($user));
+        } catch (TransportExceptionInterface $exception) {
+            report($exception);
+        }
 
         return $user;
     }
